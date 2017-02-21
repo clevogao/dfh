@@ -1,0 +1,59 @@
+.tableTop {
+	padding-top: 8px;
+}
+
+.showtime {
+	
+}
+
+.btn-small {
+  padding: 2px 9px;
+  font-size: 11px;
+  line-height: 16px;
+}
+.btn-small [class^="icon-"] {
+  margin-top: -1px;
+}
+.btn-mini {
+  padding: 2px 6px;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.colorRed {
+	color: red;
+}
+
+.colorWhite {
+	color: white;
+}
+
+.colorGreen {
+	color: green;
+}
+.iconRed {
+	color: red;
+	font-size: 12px;
+	cursor: pointer;
+}
+.iconWhite {
+	font-size: 12px;
+	cursor: pointer;
+}
+.iconGreen {
+	color: green;
+	font-size: 12px;
+	cursor: pointer;
+}
+font-size{
+	12px;
+}
+.modal-error{
+	    -webkit-box-shadow: 0 5px 15px rgba(255, 5, 5, 0.5);
+   		box-shadow: 0 5px 15px rgba(230, 21, 21, 0.5);
+        border: 1px solid #E60E0E;
+}
+.modal-info{
+	
+}
+

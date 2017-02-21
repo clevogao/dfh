@@ -1,0 +1,18 @@
+# Intellij
+*.iml
+*/target/*
+.idea/*
+*.log
+*/.output/*
+**/rebel.xml
+# Eclipse
+.settings
+.classpath
+.project
+**/.classpath
+**/.project
+
+# Mac
+.DS_Store
+
+/bin/
