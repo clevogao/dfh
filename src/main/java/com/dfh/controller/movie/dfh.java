@@ -1,7 +1,7 @@
 package com.dfh.controller.movie;
 
 import com.dfh.controller.BaseController;
-import com.jfinal.plugin.activerecord.Db;
+import com.dfh.service.MoveService;
 
 /**
  * ^_^
@@ -11,7 +11,7 @@ import com.jfinal.plugin.activerecord.Db;
  */
 public class dfh extends BaseController{
 	public void index(){
-		renderJson (Db.find ("select * from mac_vod"));
+		renderJson (new MoveService ().getMoves ());
 	}
 
 }

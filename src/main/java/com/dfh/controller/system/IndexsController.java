@@ -20,6 +20,7 @@ public class IndexsController extends Controller {
 	public static boolean canlogin=true;
 	public void loginout() {
 		getSession().removeAttribute("user");
+		getSession().invalidate();
 		redirect("/login.jsp");
 	}
 	public void changeLogin(){
