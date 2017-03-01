@@ -18,7 +18,7 @@ import com.jfinal.plugin.activerecord.Db;
 public class BaseTest {
 	@Before
 	public void init(){
-		new Test();
+		new Test ();
 	}
 	
 	/**
