@@ -35,4 +35,5 @@ public interface MovieService {
 		return null;
 	}
 
+	public Record getUrl(String type,String md5,String id);
 }

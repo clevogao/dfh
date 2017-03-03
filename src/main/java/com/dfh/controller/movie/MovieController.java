@@ -45,4 +45,9 @@ public class MovieController extends BaseController {
 		renderJson (movieService.getDetails (getParaToInt("d_id")));
 	}
 
+
+	public void getUrl(){
+		renderJson ();
+	}
+
 }
