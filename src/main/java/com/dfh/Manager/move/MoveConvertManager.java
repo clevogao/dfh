@@ -16,7 +16,7 @@ public class MoveConvertManager {
 	private static MoveConvertManager moveConvertManager;
 
 	public static MoveConvertManager GetInstance(){
-		if(moveConvertManager!=null){
+		if(moveConvertManager==null){
 			moveConvertManager=new MoveConvertManager ();
 		}
 		return moveConvertManager;
@@ -30,11 +30,12 @@ public class MoveConvertManager {
 	 */
 	public Record covertPhp(Record pr){
 		Record record = new Record ();
+		if(pr==null) return record;
 		record.setColumns (pr);
-		record.keep ("d_playfrom");//剔除无需要字段
+		record.remove ("d_playfrom","d_playurl");//剔除无需要字段
 		convertImg (record);        //图片转换
-		//得到播放类型
-		return null;
+		record.set ("vod",convert$$$(pr));							//得到播放类型
+		return record;
 	}
 
 
@@ -49,6 +50,7 @@ public class MoveConvertManager {
 		for (int i = 0; i < playurl.length; i++) {
 			Record record = new Record ();
 			record.set ("d_playfrom",r.getStr ("d_playfrom").split ("\\$\\$\\$")[i]);
+			record.set ("d_playlist",convert$ (playurl[i]));
 			records.add (record);
 		}
 		return records;
@@ -63,11 +65,12 @@ public class MoveConvertManager {
 		String [] sp=playurl.split ("#");
 		List<Record> records = new ArrayList<> ();
 		for (int i = 0; i <sp.length ; i++) {
-			try {
 				String[] spp=sp[i].split ("\\$");
-				records.add(new Record ().set ("num",spp[0]).set ("playurl",spp[1]));
-			} catch (Exception e) {
-			}
+				if (spp.length<2){
+					records.add(new Record ().set ("num","第一集").set ("playid",spp[0]));
+				}else{
+					records.add(new Record ().set ("num",spp[0]).set ("playid",spp[1]));
+				}
 		}
 		return records;
 	}

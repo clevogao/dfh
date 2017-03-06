@@ -65,7 +65,7 @@ public class Config extends JFinalConfig {
 		arp.setShowSql(true);
 //		arp.setDialect(new MyPostgreSqlDialect());
 		arp.setDialect (new MysqlDialect ());
-		arp.setDevMode (PropKit.getBoolean("jdbc.devMode", false));
+		arp.setDevMode (PropKit.getBoolean("jdbc.devMode", true));
 		me.add(arp);
 		//redis框架插件
 		RedisPlugin redisPlugin=new RedisPlugin(PropKit.get("redis.name"),PropKit.get("redis.host"));

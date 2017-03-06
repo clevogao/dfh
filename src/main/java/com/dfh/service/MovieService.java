@@ -31,9 +31,7 @@ public interface MovieService {
 	 */
 	public Record getDetails(Integer id);
 
-	default public List<Record> getMoviesByWhere () {
-		return null;
-	}
+	 public List<Record> getMoviesByWhere (String where,int index,int last);
 
-	public Record getUrl(String type,String md5,String id);
+	public Record getUrl (String type, String id);
 }

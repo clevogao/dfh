@@ -46,8 +46,19 @@ public class MovieController extends BaseController {
 	}
 
 
-	public void getUrl(){
-		renderJson ();
+	public void playUrl(){
+		renderJson (movieService.getUrl (getPara ("d_playfrom"),getPara ("playid")));
 	}
 
+	public void queryType(){
+		int index = getParaToInt ("index");
+		int last = getParaToInt ("last");
+		renderJson (movieService.getMoviesByType (getParaToInt ("id"),index,last));
+	}
+
+	public void query(){
+		int index = getParaToInt ("index");
+		int last = getParaToInt ("last");
+		renderJson (movieService.getMoviesByWhere (getPara ("name"),index,last));
+	}
 }
