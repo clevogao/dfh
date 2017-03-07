@@ -9,7 +9,8 @@ package com.dfh.controller;
 import com.dfh.interceptors.LoginInterceptor;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
-import com.jfinal.log.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ClassName: IndexController
@@ -20,7 +21,7 @@ import com.jfinal.log.Logger;
 @Before(LoginInterceptor.class)
 public class IndexController extends Controller{
 	
-	Logger logger = Logger.getLogger(IndexController.class);
+	Logger logger = LoggerFactory.getLogger (IndexController.class);
 	public void index(){ 
 		redirect("/redirect.jsp");
 	}

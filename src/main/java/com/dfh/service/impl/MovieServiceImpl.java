@@ -22,7 +22,7 @@ import java.util.List;
 public class MovieServiceImpl implements MovieService {
 	private static final String base_mac_void_sql = "select d_id,d_name,d_content,d_pic,d_playfrom,d_playurl from mac_vod  ";
 	//	private static final String base_mac_void_sql = "select * from mac_vod  ";
-	private static final String simel_mac_void_sql = "select d_id,d_name,d_pic from mac_vod  ";
+	private static final String simel_mac_void_sql = "select d_id,d_name,d_pic,d_starring from mac_vod  ";
 
 	private static HttpClient httpClient;//http
 

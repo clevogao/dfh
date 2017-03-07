@@ -5,6 +5,7 @@
  * Copyright (C) 2015 SHANGHAI VOLKSWAGEN, All rights reserved.
  */
 package com.dfh.common;
+
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.dfh.controller.IndexController;
 import com.dfh.interceptors.LoggerInteceptor;
@@ -42,8 +43,10 @@ public class Config extends JFinalConfig {
 	 */
 	public void configRoute(Routes me) {
 		me.add("/", IndexController.class);
+//		me.add("/movie", MovieController.class);
 		MyRoutesUtil.add(me);
 	}
+
 
 	/**
 	 * 配置插件

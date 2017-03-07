@@ -5,6 +5,7 @@
  * Copyright (C) 2015 SHANGHAI VOLKSWAGEN, All rights reserved.
  */
 package com.dfh.controller;
+
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class BaseController extends Controller {
 	 * Description: 将传入参数转换为record
 	 * Created by gaojiawei 2015年10月20日
 	 */
-	public Record getRecord() {
+	protected Record getRecord() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		for (Entry<String, String[]> set : getParaMap().entrySet()) {
 			try {
@@ -49,5 +50,15 @@ public class BaseController extends Controller {
 		}
 		//map=JSON.parseObject(JSON.toJSONString(getParaMap()));
 		return new Record().setColumns(map);
+	}
+
+
+
+	protected int getIndex(){
+
+		return getParaToInt ("index")==null?0:getParaToInt ("index");
+	}
+	protected int getLast(){
+		return getParaToInt ("last")==null?5:getParaToInt ("last");
 	}
 }

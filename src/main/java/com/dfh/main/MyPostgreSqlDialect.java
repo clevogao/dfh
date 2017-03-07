@@ -20,7 +20,8 @@ public class MyPostgreSqlDialect extends Dialect {
 	public String forTableBuilderDoBuild(String tableName) {
 		return "select * from \"" + tableName + "\" where 1 = 2";
 	}
-	
+
+
 	public void forModelSave(Table table, Map<String, Object> attrs, StringBuilder sql, List<Object> paras) {
 		sql.append("insert into \"").append(table.getName()).append("\"(");
 		StringBuilder temp = new StringBuilder(") values(");
@@ -136,7 +137,9 @@ public class MyPostgreSqlDialect extends Dialect {
 		}
 		return sql.toString();
 	}
-	
+
+
+
 	public void forDbSave(StringBuilder sql, List<Object> paras, String tableName, String[] pKeys, Record record) {
 		tableName = tableName.trim();
 		trimPrimaryKeys(pKeys);

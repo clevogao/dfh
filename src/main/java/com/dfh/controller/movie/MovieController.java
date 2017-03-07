@@ -28,11 +28,15 @@ public class MovieController extends BaseController {
 		Record hot = new Record ();
 		hot.set ("t_name","连续热播");//热播
 		hot.set ("moves", movieService.getHotMovie ());
+		hot.set ("class", null);
+		hot.set ("t_id", 0);
 		records.add (hot);
 		typeService.getTypesByPid (0).forEach (record -> {
 			records.add (new Record ().set ("t_name",record.get ("t_name"))
 								.set ("moves",movieService.getMoviesByType (record.get("t_id"),0,7))
-								.set ("class",typeService.getClassByTypeId (record.get ("t_id"),0,7)));
+								.set ("t_id",record.get("t_id")));
+//								.set ("class",typeService.getClassByTypeId (record.get ("t_id"),0,7)))
+
 		});
 		renderJson (records);
 	}
@@ -51,14 +55,10 @@ public class MovieController extends BaseController {
 	}
 
 	public void queryType(){
-		int index = getParaToInt ("index");
-		int last = getParaToInt ("last");
-		renderJson (movieService.getMoviesByType (getParaToInt ("id"),index,last));
+		renderJson (movieService.getMoviesByType (getParaToInt ("id"),getIndex (),getLast ()));
 	}
 
 	public void query(){
-		int index = getParaToInt ("index");
-		int last = getParaToInt ("last");
-		renderJson (movieService.getMoviesByWhere (getPara ("name"),index,last));
+		renderJson (movieService.getMoviesByWhere (getPara ("name"),getIndex (),getLast ()));
 	}
 }

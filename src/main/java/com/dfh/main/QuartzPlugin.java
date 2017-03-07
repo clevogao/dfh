@@ -5,16 +5,18 @@
  * Copyright (C) 2015 SHANGHAI VOLKSWAGEN, All rights reserved.
  */
 package com.dfh.main;
+
 import com.dfh.common.code.DbCode;
 import com.dfh.util.TimeUtil;
 import com.google.common.base.Throwables;
 import com.jfinal.ext.kit.Reflect;
-import com.jfinal.log.Logger;
 import com.jfinal.plugin.IPlugin;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -26,7 +28,7 @@ import java.util.Date;
  * Date: 2015年9月6日
  */
 public class QuartzPlugin  implements IPlugin{
-	private final Logger logger = Logger.getLogger(QuartzPlugin.class);
+	private final Logger logger = LoggerFactory.getLogger (QuartzPlugin.class);
 	private SchedulerFactory sf;
 	private Scheduler sched;
 	public QuartzPlugin() {
