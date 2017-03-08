@@ -1,6 +1,7 @@
 package com.dfh.movie;
 
 import com.dfh.BaseTest;
+import com.dfh.service.impl.MovieServiceImpl;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import org.junit.Test;
@@ -19,7 +20,10 @@ public class MovieTest extends BaseTest{
 		Record indexRecord = new Record ();
 		System.out.println ("MovieTest.getMovesIndex()-------------->>>>>" + Db.find (base_mac_void_sql+" and  d_type =1 order by d_time desc"));;
 	}
-
+	@Test
+	public void clent(){
+		new MovieServiceImpl ().getUrl ("ss","COTE0Nzk2NA==");
+	}
 
 
 }
