@@ -58,6 +58,12 @@ public class BaseController extends Controller {
 
 		return getParaToInt ("index")==null?0:getParaToInt ("index");
 	}
+
+	public void renderJson(Object o){
+
+		super.renderJson (o);
+	}
+
 	protected int getLast(){
 		return getParaToInt ("last")==null?5:getParaToInt ("last");
 	}

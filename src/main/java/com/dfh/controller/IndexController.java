@@ -6,8 +6,6 @@
  */
 package com.dfh.controller;
 
-import com.dfh.interceptors.LoginInterceptor;
-import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +16,12 @@ import org.slf4j.LoggerFactory;
  * Author: gaojiawei
  * Date: 2015年9月6日
  */
-@Before(LoginInterceptor.class)
+//@Before(LoginInterceptor.class)
 public class IndexController extends Controller{
 	
 	Logger logger = LoggerFactory.getLogger (IndexController.class);
 	public void index(){ 
-		redirect("/redirect.jsp");
+//		redirect("/redirect.jsp");
 	}
 	
 

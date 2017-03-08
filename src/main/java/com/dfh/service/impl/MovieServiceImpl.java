@@ -21,9 +21,9 @@ import static com.dfh.Manager.move.MoveConvertManager.GetInstance;
  * Date: 2017/2/28
  */
 public class MovieServiceImpl implements MovieService {
-	private static final String base_mac_void_sql = "select d_id,d_name,d_content,d_pic,d_playfrom,d_playurl,d_starring from mac_vod  ";
+	private static final String base_mac_void_sql = "select d_id,d_name,d_content,d_pic,d_playfrom,d_playurl,d_starring,d_type t_id from mac_vod  ";
 	//	private static final String base_mac_void_sql = "select * from mac_vod  ";
-	private static final String simel_mac_void_sql = "select d_id,d_name,d_pic,d_starring from mac_vod  ";
+	private static final String simel_mac_void_sql = "select d_id,d_name,d_pic,d_starring,d_type t_id from mac_vod  ";
 
 	public List<Record> getHotMovie () {
 		return getMovesByWhere (" where d_level in (4,5) order by d_hits desc");
@@ -58,7 +58,7 @@ public class MovieServiceImpl implements MovieService {
 			String ext = "";
 			String url = "";
 			if(type.equals ("m3u81")){
-				ext="link";
+				ext="vip";
 				url = "http://3.fuhao56.com/share/"+id;
 			}else {
 				String json=phpurl(id,type);
@@ -67,7 +67,6 @@ public class MovieServiceImpl implements MovieService {
 					ext=jsonObject.getString ("ext");
 					url=jsonObject.getString ("url");
 				}
-				record.set ("error","解析错误");
 			}
 			record.set ("ext",ext);
 			record.set ("uel",url);
