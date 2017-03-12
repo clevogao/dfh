@@ -60,7 +60,7 @@ public class BaseController extends Controller {
 	}
 
 	public void renderJson(Object o){
-
+		logger.debug ("返回结果:"+o);
 		super.renderJson (o);
 	}
 

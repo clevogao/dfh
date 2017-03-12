@@ -2,15 +2,14 @@ package com.dfh.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.dfh.Manager.move.MoviePlayType;
 import com.dfh.service.MovieService;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.dfh.Manager.move.MoveConvertManager.GetInstance;
 
@@ -24,7 +23,7 @@ public class MovieServiceImpl implements MovieService {
 	private static final String base_mac_void_sql = "select d_id,d_name,d_content,d_pic,d_playfrom,d_playurl,d_starring,d_type t_id from mac_vod  ";
 	//	private static final String base_mac_void_sql = "select * from mac_vod  ";
 	private static final String simel_mac_void_sql = "select d_id,d_name,d_pic,d_starring,d_type t_id from mac_vod  ";
-
+	private KeyService keyService=new KeyService ();
 	public List<Record> getHotMovie () {
 		return getMovesByWhere (" where d_level in (4,5) order by d_hits desc");
 	}
@@ -52,16 +51,23 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public Record getUrl (String type, String id) {
+	public Record getUrl (String type, String id, String ip) {
 		Record record = new Record ();
 
 			String ext = "";
 			String url = "";
-			if(type.equals ("m3u81")){
+			if(type.equals (MoviePlayType.m3u81)){
+//				ext="vip";
+//				url = "http://3.fuhao56.com/share/"+id;
 				ext="vip";
-				url = "http://3.fuhao56.com/share/"+id;
-			}else {
-				String json=phpurl(id,type);
+				url=id+"?"+getVip2Url(keyService.getKey (),ip);
+			}
+			else if (type.equals (MoviePlayType.vip2)){
+				ext="vip";
+				url=id+"?"+getVip2Url(keyService.getKey (),ip);
+			}
+			else {
+				String json= getM3u81Url (id,type);
 				if(!json.equals ("403")){
 					JSONObject jsonObject=JSON.parseObject (json);
 					ext=jsonObject.getString ("ext");
@@ -80,7 +86,7 @@ public class MovieServiceImpl implements MovieService {
 	 * @param type
 	 * @return
 	 */
-	private String phpurl(String id,String type) {
+	private String getM3u81Url(String id, String type) {
 		String md5 = HttpKit.get (PropKit.get ("phpurl.url") + "/mdparse/md5.php?md5=" + id);
 		String data=String.format ("id=%s&type=%s&md5=%s",id,type,md5);
 //		Map<String, String> map = new HashMap<String, String> ();
@@ -91,18 +97,15 @@ public class MovieServiceImpl implements MovieService {
 		return json;
 	}
 
-	public static void main (String[] args) {
-		PropKit.use ("config.properties");
-		String id = "http://www.le.com/ptv/vplay/28064244.html";
-		String type = "letv";
-		String md5 = HttpKit.get (PropKit.get ("phpurl.url") + "/mdparse/md5.php?md5=" + id);
-		String data=String.format ("id=%s&type=%s&md5=%s",id,type,md5);
 
-		Map<String, String> map = new HashMap<String, String> ();
-		//		map.put ("id",id);
-		//		map.put ("type",type);
-		//		map.put ("md5",md5);
-		String json=	HttpKit.post (PropKit.get ("phpurl.url")+"/mdparse/url.php",map,data);
+	private String getVip2Url (String key,String ip) {
+		String json = HttpKit.get (PropKit.get ("phpurl.url") + "/mdparse/vip2sign.php?ip=" + ip+"&key="+key);
+		return json.replaceAll (" ","").replaceAll ("\r|\n","");
+	}
+
+	public static void main (String[] args) {
+		String json = HttpKit.get ("http://localhost" + "/mdparse/vip2sign.php?ip=" + "127.0.0.1"+"&key="+"fdsafasdfsad");
+
 		System.out.println (json);
 	}
 }

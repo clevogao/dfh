@@ -22,7 +22,9 @@ public class MovieTest extends BaseTest{
 	}
 	@Test
 	public void clent(){
-		new MovieServiceImpl ().getUrl ("ss","COTE0Nzk2NA==");
+		String from = "tudouyun";
+		String id = "265319287";
+		System.out.println ("MovieTest.clent()-------------->>>>>" + new MovieServiceImpl ().getUrl (from,id, "127.0.0.1"));;
 	}
 
 

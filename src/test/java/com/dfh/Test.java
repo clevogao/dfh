@@ -10,6 +10,9 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.druid.DruidPlugin;
+import org.voovan.db.JdbcOperate;
+
+import java.sql.SQLException;
 
 /**
  * ClassName: test
@@ -46,6 +49,18 @@ public class Test {
 		//		mPlugin.start();
 	}
 
-
+	public static void main (String[] args) throws SQLException {
+		PropKit.use("config.properties"); // 加载少量必要配置，随后可用PropKit.get(...)获取值
+		DruidPlugin druidPlugin = new DruidPlugin(PropKit.get("jdbc.url"), PropKit.get("jdbc.user"),
+				PropKit.get("jdbc.password"), PropKit.get("jdbc.driver"));
+		druidPlugin.addFilter(new StatFilter ());
+		druidPlugin.setTestWhileIdle(true);
+		druidPlugin.setTestOnBorrow(true);
+		druidPlugin.setTestOnReturn(true);
+		druidPlugin.setFilters("stat");
+		druidPlugin.start ();
+		JdbcOperate jdbcOperate = new JdbcOperate (druidPlugin.getDataSource ());
+		System.out.println (jdbcOperate.queryMap ("select * from mac_vod limit 1"));
+	}
 }
 

@@ -33,5 +33,5 @@ public interface MovieService {
 
 	 public List<Record> getMoviesByWhere (String where,int index,int last);
 
-	public Record getUrl (String type, String id);
+	public Record getUrl (String type, String id, String ip);
 }

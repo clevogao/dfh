@@ -11,6 +11,8 @@ import com.jfinal.plugin.activerecord.Record;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.dfh.util.IpAddrUtil.getIpAddr;
+
 /**
  * ^_^
  * Description: 电影
@@ -55,9 +57,14 @@ public class MovieController extends BaseController {
 		renderJson (movieService.getDetails (getParaToInt ("d_id")).set ("hot",hots));
 	}
 
-
+	/**
+	 * d_playfrom: 播放类型
+	 * playid:播放id
+	 */
 	public void playUrl () {
-		renderJson (movieService.getUrl (getPara ("d_playfrom"), getPara ("playid")));
+		String ip = getIpAddr (getRequest ());
+		logger.info ("ip:"+ip);
+		renderJson (movieService.getUrl (getPara ("d_playfrom"), getPara ("playid"),ip));
 	}
 
 	public void queryType () {
