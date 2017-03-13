@@ -9,6 +9,8 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import static com.dfh.Manager.move.MoveConvertManager.GetInstance;
@@ -65,13 +67,20 @@ public class MovieServiceImpl implements MovieService {
 			else if (type.equals (MoviePlayType.vip2)){
 				ext="vip";
 				url=id+"?"+getVip2Url(keyService.getKey (),ip);
-			}
-			else {
-				String json= getM3u81Url (id,type);
+			}else if(type.equals (MoviePlayType.le)){
+				String json= getM3u81Url (id,"mmsid2");
 				if(!json.equals ("403")){
 					JSONObject jsonObject=JSON.parseObject (json);
 					ext=jsonObject.getString ("ext");
 					url=jsonObject.getString ("url");
+				}
+			}
+			else {
+				String json= getM3u81Url (id,type);
+					if(!json.equals ("403")){
+						JSONObject jsonObject=JSON.parseObject (json);
+						ext=jsonObject.getString ("ext");
+						url=jsonObject.getString ("url");
 				}
 			}
 			record.set ("ext",ext);
@@ -86,14 +95,15 @@ public class MovieServiceImpl implements MovieService {
 	 * @param type
 	 * @return
 	 */
-	private String getM3u81Url(String id, String type) {
+	public String getM3u81Url(String id, String type) {
 		String md5 = HttpKit.get (PropKit.get ("phpurl.url") + "/mdparse/md5.php?md5=" + id);
-		String data=String.format ("id=%s&type=%s&md5=%s",id,type,md5);
-//		Map<String, String> map = new HashMap<String, String> ();
-//		map.put ("id",id);
-//		map.put ("type",type);
-//		map.put ("md5",md5);
+		String data=String.format ("id=%s&type=%s&md5=%s",id,type,md5).trim ().replace (" ","").replaceAll ("\r|\n","");
 		String json=HttpKit.post (PropKit.get ("phpurl.url")+"/mdparse/url.php",null,data);
+		try {
+			json= URLDecoder.decode (json,"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace ();
+		}
 		return json;
 	}
 
@@ -103,9 +113,4 @@ public class MovieServiceImpl implements MovieService {
 		return json.replaceAll (" ","").replaceAll ("\r|\n","");
 	}
 
-	public static void main (String[] args) {
-		String json = HttpKit.get ("http://localhost" + "/mdparse/vip2sign.php?ip=" + "127.0.0.1"+"&key="+"fdsafasdfsad");
-
-		System.out.println (json);
-	}
 }
